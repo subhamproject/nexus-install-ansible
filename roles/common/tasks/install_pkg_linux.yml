@@ -1,0 +1,23 @@
+---
+- name: "Adding Necessary repositories in Linux Server"
+  get_url:
+      url: https://download.docker.com/linux/centos/docker-ce.repo
+      dest: /etc/yum.repos.d/docer-ce.repo
+      force: True
+      mode: 0755
+  become: true
+- name: "Install packages in Linux Server"
+  yum: pkg="{{ item }}" state=present
+  with_items:
+    - git
+    - java
+    - docker-ce
+    - wget
+    - curl
+    - whois
+    - tmux
+    - dos2unix
+  become: true
+- name: "Start docker"
+  service: name=docker state=started enabled=true
+  become: true

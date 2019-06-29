@@ -1,0 +1,39 @@
+---
+# https://www.digitalocean.com/community/tutorials/how-to-install-jenkins-on-ubuntu-16-04
+#https://medium.com/dev-blogs/step-by-step-guide-to-install-jenkins-on-ubuntu-16-04-fba5f32ed402
+- name: "Ensure the jenkins apt repository key is installed in Ubuntu servers"
+  apt_key: url=https://pkg.jenkins.io/debian-stable/jenkins.io.key state=present
+  become: true
+
+- name: "Ensure the repository is configured in Ubuntu Servers"
+  apt_repository: repo='deb https://pkg.jenkins.io/debian-stable binary/' state=present
+  become: true
+
+- name: "Ensure jenkins is installed in Ubuntu servers"
+  apt: name=jenkins update_cache=yes state=present
+  become: true
+  
+- name: "Taking Jenkins config file backup"
+  shell:
+      cmd: |
+        cp -pr /etc/default/jenkins /etc/default/jenkins_org_bkp
+        sed -i 's|^JENKINS_HOME|#JENKINS_HOME|' /etc/default/jenkins
+        sed -i 's|^JAVA_ARGS|#JAVA_ARGS|' /etc/default/jenkins
+        mkdir -p {{ jenkins_home }}
+        chown -R jenkins:jenkins {{ jenkins_home }}
+      warn: False
+  become: true
+- name: "Changing jenkins_home to custom path {{ jenkins_home }}"
+  blockinfile:
+      dest: /etc/default/jenkins
+      insertafter: '#JENKINS_HOME'
+      backup: yes
+      content: |
+       JENKINS_HOME="{{ jenkins_home }}"
+       JAVA_ARGS="{{ java_args }}"
+  become: true
+ 
+- name: "start jenkins"
+  service: name="{{ item }}" state=started enabled=true
+  with_items:
+    - jenkins

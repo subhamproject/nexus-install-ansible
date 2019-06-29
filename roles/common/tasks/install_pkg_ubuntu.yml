@@ -1,0 +1,29 @@
+---
+- name: "Adding APT keys for Docker"
+  apt_key: url="{{ item }}" state=present
+  with_items:
+     - 'https://download.docker.com/linux/ubuntu/gpg'
+  become: true
+- name: "Adding Necessary repositories in Ubuntu servers"
+  apt_repository: repo="{{ item }}" state=present
+  with_items:
+     - 'deb https://download.docker.com/linux/ubuntu xenial stable'
+     - 'ppa:deadsnakes/ppa'
+     - 'ppa:openjdk-r/ppa'
+  become: true
+- name: "Installing packages in Ubuntu servers"
+  apt: pkg="{{ item }}" update_cache=yes state=present
+  with_items:
+     - docker-ce
+     - wget
+     - curl
+     - git
+     - tmux
+     - whois
+     - dos2unix
+     - python3.6
+     - openjdk-8-jdk
+  become: true
+- name: "Start docker"
+  service: name=docker state=started enabled=true
+  become: true

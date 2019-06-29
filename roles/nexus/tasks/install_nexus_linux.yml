@@ -1,0 +1,44 @@
+---
+- name: "Create nexus download path"
+  file:
+   path: "{{ item }}"
+   state: directory
+  with_items:
+      - '/nexus'
+      - '/nexus-data'
+  
+- name: "Adding nexus user"
+  user:
+    name: nexus
+    comment: Nexus Artifact Account
+    shell: /bin/bash
+   
+- name: "Download Nexus package for Linux servers from web"
+  get_url:
+    url: https://sonatype-download.global.ssl.fastly.net/repository/repositoryManager/3/nexus-3.17.0-01-unix.tar.gz
+    dest: /nexus
+    force: True
+    mode: 0755
+  become: true
+
+- name: "Extracting Nexus package"
+  unarchive:
+     src: /nexus/nexus-3.17.0-01-unix.tar.gz
+     dest: /nexus
+
+- name: "Installing Nexus"
+  shell:
+      cmd: |
+        cd /nexus && rm -rf nexus-3.17.0-01-unix.tar.gz sonatype-work && mv nexus-3.* nexus
+        sed -i 's|#run_as_user=""|run_as_user="nexus"|' ./nexus/bin/nexus.rc \
+        && chown nexus:nexus /nexus-data
+        sed -i 's|^-Dkaraf.data=.*|-Dkaraf.data=/nexus-data|; s|^-Djava.io.tmpdir=.*|-Djava.io.tmpdir=data/tmp|; s|^-XX:LogFile=.*|-XX:LogFile=/nexus-data/log/jvm.log|' ./nexus/bin/nexus.vmoptions \
+        && echo "nexus - nofile 65536" >> /etc/security/limits.conf && ln -s /nexus/nexus/bin/nexus /etc/init.d/nexus
+        chown -R nexus:nexus /nexus
+      warn: False
+  become: true
+
+- name: "Start Nexus"
+  service: name="{{ item }}" state=started enabled=true
+  with_items:
+     - nexus

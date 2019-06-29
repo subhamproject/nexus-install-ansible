@@ -1,0 +1,5 @@
+---
+- include_tasks: start_service_ubuntu.yml
+  when: "ansible_distribution == 'Ubuntu'"
+- include_tasks: start_service_linux.yml
+  when: ansible_distribution == 'Linux' or ansible_distribution == 'CentOS' or ansible_distribution == 'Amazon'

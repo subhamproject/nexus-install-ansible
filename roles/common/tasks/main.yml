@@ -1,0 +1,9 @@
+---
+- include_tasks: install_compose.yml
+  when: ansible_distribution == 'Linux' or ansible_distribution == 'CentOS' or ansible_distribution == 'Ubuntu' 
+- include_tasks: install_pkg_ubuntu.yml
+  when: "ansible_distribution == 'Ubuntu'"
+- include_tasks: install_pkg_linux.yml
+  when: ansible_distribution == 'Linux' or ansible_distribution == 'CentOS' 
+- include_tasks: install_pkg_amazon.yml
+  when: ansible_distribution == 'Amazon'
