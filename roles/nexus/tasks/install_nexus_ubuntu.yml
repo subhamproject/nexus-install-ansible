@@ -17,7 +17,7 @@
    
 - name: "Download Nexus package for Ubuntu servers from web"
   get_url:
-    url: https://sonatype-download.global.ssl.fastly.net/repository/repositoryManager/3/nexus-3.17.0-01-unix.tar.gz
+    url: "{{ nexus_url }}"
     dest: "{{ nexus_home }}"
     force: True
     mode: 0755
@@ -27,6 +27,8 @@
   unarchive:
      src: /nexus/nexus-3.17.0-01-unix.tar.gz
      dest: "{{ nexus_home }}"
+     copy: no
+     owner: nexus
 
 - name: "Installing Nexus"
   shell:

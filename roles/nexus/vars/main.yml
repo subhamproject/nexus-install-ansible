@@ -3,3 +3,4 @@ nexus_home: /nexus
 nexus_data_dir: /nexus-data
 conf: /etc/security/limits.conf
 user: nexus
+nexus_url: https://sonatype-download.global.ssl.fastly.net/repository/repositoryManager/3/nexus-3.17.0-01-unix.tar.gz
