@@ -12,6 +12,8 @@
     name: nexus
     comment: Nexus Artifact Account
     shell: /bin/bash
+    createhome: yes
+    home: "{{ nexus_home }}"
    
 - name: "Download Nexus package for Linux servers from web"
   get_url:
