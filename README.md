@@ -1,5 +1,5 @@
-# Jenkins_Install_Ansible
+# Nexus_Install_Ansible
 
 Usage:
 
-ansible-playbook master_jenkins_install.yml
+ansible-playbook master_nexus_install.yml
