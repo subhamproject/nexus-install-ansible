@@ -14,7 +14,6 @@
     - docker-ce
     - wget
     - curl
-    - whois
     - tmux
     - dos2unix
   become: true

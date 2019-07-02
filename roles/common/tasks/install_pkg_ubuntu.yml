@@ -19,7 +19,6 @@
      - curl
      - git
      - tmux
-     - whois
      - dos2unix
      - python3.6
      - openjdk-8-jdk
