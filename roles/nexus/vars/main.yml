@@ -1,4 +1,1 @@
 ---
-jenkins_home: /jenkins
-jenkins_java_options: '-Djava.awt.headless=true -Dmail.smtp.starttls.enable=true -Dpermissive-script-security.enabled=no_security -Dhudson.tasks.MailSender.SEND_TO_UNKNOWN_USERS=true -Dhudson.tasks.MailSender.SEND_TO_USERS_WITHOUT_READ=true'
-java_args: '-Djava.awt.headless=true -Dmail.smtp.starttls.enable=true -Dpermissive-script-security.enabled=no_security -Dhudson.tasks.MailSender.SEND_TO_UNKNOWN_USERS=true -Dhudson.tasks.MailSender.SEND_TO_USERS_WITHOUT_READ=true'
