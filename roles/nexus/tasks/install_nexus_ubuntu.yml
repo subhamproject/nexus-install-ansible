@@ -13,7 +13,7 @@
     comment: Nexus Artifact Account
     shell: /bin/bash
    
-- name: "Download Nexus package for Linux servers from web"
+- name: "Download Nexus package for Ubuntu servers from web"
   get_url:
     url: https://sonatype-download.global.ssl.fastly.net/repository/repositoryManager/3/nexus-3.17.0-01-unix.tar.gz
     dest: "{{ nexus_home }}"
