@@ -1,1 +1,5 @@
 ---
+nexus_home: /nexus
+nexus_data_dir: /nexus-data
+conf: /etc/security/limits.conf
+user: nexus
