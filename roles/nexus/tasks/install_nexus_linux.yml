@@ -26,7 +26,7 @@
 
 - name: "Extracting Nexus package"
   unarchive:
-     src: {{ nexus_home }}/nexus-3.17.0-01-unix.tar.gz
+     src: /{{ nexus_home }}/nexus-3.17.0-01-unix.tar.gz
      dest: "{{ nexus_home }}"
      copy: no
      owner: nexus
